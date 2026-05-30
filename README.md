@@ -3,8 +3,7 @@
 Official repository for **"Boosting Audio Visual Question Answering via Key Semantic-Aware Cues"** (ACM MM 2024).
 
 - **ArXiv Paper**: [Boosting Audio Visual Question Answering via Key Semantic-Aware Cues](https://arxiv.org/abs/2407.20693)
-- **Original Authors**: [Guangyao Li](https://ayameyao.github.io/), [Henghui Du](), [Di Hu](https://dtaoo.github.io/index.html)
-- **Maintained & Modified by**: [Ramendra Bharadwaj](https://github.com/bh-ramendra) (Indian Institute of Technology Patna - IIT Patna)
+- **Authors**: [Guangyao Li](https://ayameyao.github.io/), [Henghui Du](), [Di Hu](https://dtaoo.github.io/index.html)
 
 ---
 
