@@ -130,8 +130,8 @@ if __name__ == "__main__":
 
 
     # 158
-    dir_fps_path = '/data/MUSIC-AVQA/avqa-frames-1fps'
-    dst_clip_path = '/data/MUSIC-AVQA/clip_vit_b32'
+    dir_fps_path = '/home/ramendra_2511ai39/data/MUSIC-AVQA-Dataset/avqa-frames-1fps'
+    dst_clip_path = '/home/ramendra_2511ai39/data/MUSIC-AVQA-Dataset/clip_vit_b32'
     ImageClIP_feat_extract(dir_fps_path, dst_clip_path)
 
 

@@ -124,8 +124,9 @@ class TemporalPerception(nn.Module):
         top_k_index_sort, indices = torch.sort(top_k_index)     # [B, 1, Top_K]
         top_k_index_sort = top_k_index_sort.cpu().numpy()       # [B, 1, Top_K],
 
-        output_audio = torch.zeros(B, self.args.top_k, C).cuda()
-        output_visual = torch.zeros(B, self.args.top_k, C).cuda()
+        device = audio_input.device
+        output_audio = torch.zeros(B, self.args.top_k, C, device=device)
+        output_visual = torch.zeros(B, self.args.top_k, C, device=device)
 
         for batch_idx in range(B):
             idx = 0
@@ -247,7 +248,7 @@ class SpatioPerceptionModule(nn.Module):
         
         # patch feat: [B, T, N, C]
         B, T, N, C = visual_patch.size()
-        visual_patch_select = torch.zeros(B, self.args.top_k, N, C).cuda()
+        visual_patch_select = torch.zeros(B, self.args.top_k, N, C, device=visual_patch.device)
         
         for batch_idx in range(B):
             temp_idx = 0
@@ -255,7 +256,7 @@ class SpatioPerceptionModule(nn.Module):
                 visual_patch_select[batch_idx, temp_idx, :, :] = visual_patch[batch_idx, k_idx, :, :]
                 temp_idx = temp_idx + 1
 
-        return avisual_patch_select
+        return visual_patch_select
 
 
     def AudioGuidedPatchAttn(self, query_feat, visual_patch):
@@ -312,14 +313,15 @@ class TSPM(nn.Module):
         # features input
         self.input_a = nn.Linear(128, hidden_size)
         self.input_v = nn.Linear(768, hidden_size)
-        self.input_v_patch = nn.Linear(1024, hidden_size)
+        # CLIP patch features use 768-dim embeddings
+        self.input_v_patch = nn.Linear(768, hidden_size)
 
         self.input_qst = nn.Linear(768, hidden_size)
         self.input_qst_prompt = nn.Linear(768, hidden_size)
 
         # Modules
         self.AV_Attn = AV_Attn(args, AVHanLayer(d_model=512, nhead=1, dim_feedforward=512), num_layers=1) 
-        self.TemporalPerception = TemporalPerceptionModule(args)
+        self.TemporalPerception = TemporalPerception(args)
         self.SpatioPerception = SpatioPerceptionModule(args)
         self.QstTempGrd_Module = QstTemporalGrounding(args)
 

@@ -261,17 +261,31 @@ def VideoLableCLIP_feat(label_path, dst_qst_path):
             np.save(save_file, label_features)
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    json_path = "../../dataset/split_que_id/music_avqa.json"
+#     json_path = "../../dataset/split_que_id/music_avqa.json"
     
-    dst_qst_path = "/data//MUSIC-AVQA/clip_feats/qaPrompt_ViT-L14@336px"
+#     dst_qst_path = "/data//MUSIC-AVQA/clip_feats/qaPrompt_ViT-L14@336px"
 
 
-    QstCLIP_feat(json_path, dst_qst_path)
+#     QstCLIP_feat(json_path, dst_qst_path)
 
-    # VideoLableCLIP_feat(video_label_path, dst_qst_path)
+#     # VideoLableCLIP_feat(video_label_path, dst_qst_path)
 
-    print("\n--------------------- end! ----------------------------\n")
+#     print("\n--------------------- end! ----------------------------\n")
+
+
+if __name__ == "__main__":
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../dataset/split_que_id"))
+    dst_qst_path = os.path.abspath("./clip_feats/qaPrompt_ViT-L14@336px")
+    os.makedirs(dst_qst_path, exist_ok=True)
+
+    for name in ["music_avqa_train.json", "music_avqa_val.json", "music_avqa_test.json"]:
+        json_path = os.path.join(base_dir, name)
+        if os.path.exists(json_path):
+            print("processing:", json_path)
+            QstCLIP_feat(json_path, dst_qst_path)
+        else:
+            print("missing:", json_path)
 
     

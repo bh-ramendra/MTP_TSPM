@@ -7,7 +7,7 @@ import ast
 import json
 import numpy as np
 
-from dataloadersp import *
+from dataloader import *
 from nets.net import TSPM
 from configs.arguments import parser
 
